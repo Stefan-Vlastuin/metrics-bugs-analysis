@@ -1,6 +1,8 @@
 import csv
 import os
 
+import pandas as pd
+
 metrics_path = "../data/metric_values.csv"
 bugs_path = "../data/bugs.csv"
 
@@ -45,3 +47,11 @@ def prepare_data(data):
             result[key].append(value)
 
     return result
+
+
+def get_dataframe():
+    data = prepare_data(read_data())
+    df = pd.DataFrame(data)
+    # Convert everything (except for FileName) to numeric values
+    df[df.columns.difference(['FileName'])] = df[df.columns.difference(['FileName'])].apply(pd.to_numeric)
+    return df
