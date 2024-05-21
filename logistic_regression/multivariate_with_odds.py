@@ -5,6 +5,7 @@ from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
+from sklearn.preprocessing import StandardScaler
 
 from read_data.read_data import read_data, prepare_data
 
@@ -17,6 +18,10 @@ X = df.iloc[:, 1:-1]  # Features (leave out file names and target variable)
 #  X = df[['LOC','Complexity','Depth','Children','Response','Cohesion','Coupling','LambdaLines']]
 y = df['hasBug']  # Target variable
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 # Creating a logistic regression model
 # TODO: should we use class_weight='balanced' here?
@@ -40,3 +45,17 @@ print("F1:", f1)
 
 ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 plt.show()
+
+coefficients = logreg.coef_[0]
+odds_ratios = np.exp(coefficients)
+intercept = logreg.intercept_
+print("Intercept:", intercept)
+
+# Combine feature names with odds ratios
+odds_ratios_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': coefficients,
+    'Odds Ratio': odds_ratios
+})
+
+print(odds_ratios_df)
