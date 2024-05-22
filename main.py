@@ -34,6 +34,16 @@ def main():
         print("\tF1 Score", result['f1'])
 
     print()
+    print("Multivariate logistic regression (only baseline)")
+    x_baseline = x[['LOC', 'Complexity', 'Depth', 'Children', 'Response', 'Cohesion', 'Coupling']]
+    baseline_result = multivariate(x_baseline, y)
+    print("Accuracy", baseline_result['accuracy'])
+    print("Precision", baseline_result['precision'])
+    print("Recall", baseline_result['recall'])
+    print("F1 Score", baseline_result['f1'])
+    print(baseline_result['confusion_matrix'])
+
+    print()
     print("Multivariate logistic regression")
     multi_result = multivariate(x, y)
     print("Accuracy", multi_result['accuracy'])
