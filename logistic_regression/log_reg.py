@@ -37,8 +37,14 @@ def apply_logistic_regression(x, y):
     f1 = metrics.f1_score(y_test, y_pred, zero_division=0)
     confusion_matrix = metrics.confusion_matrix(y_test, y_pred)
 
-    return coefficients, odds_ratios, p_values, pr_squared, accuracy, precision, recall, f1, confusion_matrix
-
-
-def enough_values(v):
-    return v.where(lambda x: x > 0).count() >= 10
+    return {
+        'coefficients': coefficients,
+        'odds_ratios': odds_ratios,
+        'p_values': p_values,
+        'pr_squared': pr_squared,
+        'accuracy': accuracy,
+        'precision': precision,
+        'recall': recall,
+        'f1': f1,
+        'confusion_matrix': confusion_matrix
+    }

@@ -3,8 +3,8 @@ import os
 
 import pandas as pd
 
-metrics_path = "../data/metric_values.csv"
-bugs_path = "../data/bugs.csv"
+metrics_path = "data/metric_values.csv"
+bugs_path = "data/bugs.csv"
 
 
 def read_csv(path):

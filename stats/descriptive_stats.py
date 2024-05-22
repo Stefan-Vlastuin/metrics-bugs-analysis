@@ -9,4 +9,4 @@ def show_descriptive_stats(df):
     print(stats)
 
 
-show_descriptive_stats(get_dataframe())
+
