@@ -2,13 +2,17 @@ import numpy as np
 import statsmodels.api as sm
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
 
 
 def apply_logistic_regression(x, y):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
 
     # TODO: use k-fold cross validation
-    # TODO: balance the dataset
+
+    # Oversample classes with bugs
+    smote = SMOTE(random_state=0)
+    x_train, y_train = smote.fit_resample(x_train, y_train)
 
     # Add constants (for intercept)
     x_train_const = sm.add_constant(x_train)
