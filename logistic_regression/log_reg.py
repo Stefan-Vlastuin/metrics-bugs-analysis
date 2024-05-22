@@ -4,6 +4,8 @@ from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
 
+PROB_THRESHOLD = 0.5
+
 
 def apply_logistic_regression(x, y):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
@@ -29,7 +31,7 @@ def apply_logistic_regression(x, y):
 
     # Prediction metrics
     y_pred_prob = model_sm.predict(x_test_const)
-    y_pred = (y_pred_prob > 0.5).astype(int)
+    y_pred = (y_pred_prob > PROB_THRESHOLD).astype(int)
 
     accuracy = metrics.accuracy_score(y_test, y_pred)
     precision = metrics.precision_score(y_test, y_pred, zero_division=0)
