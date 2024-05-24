@@ -1,7 +1,7 @@
 import numpy as np
 import statsmodels.api as sm
 from sklearn import metrics
-from sklearn.model_selection import train_test_split, StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 from imblearn.over_sampling import SMOTE
 
 PROB_THRESHOLD = 0.5

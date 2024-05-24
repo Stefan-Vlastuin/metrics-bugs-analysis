@@ -1,5 +1,3 @@
-import pandas as pd
-
 from logistic_regression.multivariate import multivariate
 from logistic_regression.univariate import univariate
 from read_data.read_data import get_dataframe
