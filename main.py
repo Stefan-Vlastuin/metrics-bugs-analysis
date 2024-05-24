@@ -1,7 +1,7 @@
 import pandas as pd
 
-from logistic_regression.multivariate_statsmodel import multivariate
-from logistic_regression.univariate_statsmodels import univariate
+from logistic_regression.multivariate import multivariate
+from logistic_regression.univariate import univariate
 from read_data.read_data import get_dataframe
 from stats.correlation import show_correlation
 from stats.descriptive_stats import show_descriptive_stats
