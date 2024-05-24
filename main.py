@@ -21,6 +21,7 @@ def main():
     show_descriptive_stats(x)
     show_correlation(x)
 
+    print()
     print("Univariate logistic regression per metric")
     uni_results = univariate(x, y)
     for result in uni_results:
