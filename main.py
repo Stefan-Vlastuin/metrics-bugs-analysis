@@ -1,3 +1,5 @@
+import sys
+
 from logistic_regression.multivariate import multivariate
 from logistic_regression.univariate import univariate
 from read_data.read_data import get_dataframe
@@ -10,7 +12,14 @@ def enough_values(v):
 
 
 def main():
-    data = get_dataframe()
+    if len(sys.argv) != 3:
+        print("Usage: python main.py <metrics_path> <bugs_path>")
+        sys.exit(1)
+
+    metrics_path = sys.argv[1]
+    bugs_path = sys.argv[2]
+
+    data = get_dataframe(metrics_path, bugs_path)
 
     x = data.iloc[:, 1:-1]  # Features (leave out file names and target variable)
     x = x.loc[:, x.apply(enough_values)]  # Filter out features with few values

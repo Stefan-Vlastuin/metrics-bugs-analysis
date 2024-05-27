@@ -3,9 +3,6 @@ import os
 
 import pandas as pd
 
-metrics_path = "data/metric_values.csv"
-bugs_path = "data/bugs.csv"
-
 
 def read_csv(path):
     with open(path) as csvfile:
@@ -15,7 +12,7 @@ def read_csv(path):
 
 # Reads CSV files with metrics values and bugs, and merges them.
 # Returns list of dictionaries.
-def read_data():
+def read_data(metrics_path, bugs_path):
     metrics = read_csv(metrics_path)
     bugs = read_csv(bugs_path)
 
@@ -30,8 +27,7 @@ def read_data():
 
 def has_bug(file_name, bugs):
     for bug_row in bugs:
-        bug_row["FileName"] = os.path.basename(bug_row["FileName"])  # Ignore rest of path
-        if bug_row["FileName"] == file_name and int(bug_row["Count"]) > 0:
+        if os.path.normpath(bug_row["FileName"]) == os.path.normpath(file_name) and int(bug_row["Count"]) > 0:
             return True
     return False
 
@@ -49,8 +45,8 @@ def prepare_data(data):
     return result
 
 
-def get_dataframe():
-    data = prepare_data(read_data())
+def get_dataframe(metrics_path, bugs_path):
+    data = prepare_data(read_data(metrics_path, bugs_path))
     df = pd.DataFrame(data)
     # Convert everything (except for FileName) to numeric values
     df[df.columns.difference(['FileName'])] = df[df.columns.difference(['FileName'])].apply(pd.to_numeric)
