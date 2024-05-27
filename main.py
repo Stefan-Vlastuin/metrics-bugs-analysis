@@ -44,7 +44,8 @@ def main():
     print()
     print("Multivariate logistic regression (only baseline)")
     x_baseline = x[['LOC', 'Complexity', 'Depth', 'Children', 'Response', 'Cohesion', 'Coupling']]
-    baseline_result = multivariate(x_baseline, y)
+    selected_features, baseline_result = multivariate(x_baseline, y)
+    print("Selected features:", selected_features)
     print("Accuracy", baseline_result['accuracy'])
     print("Precision", baseline_result['precision'])
     print("Recall", baseline_result['recall'])
@@ -53,7 +54,8 @@ def main():
 
     print()
     print("Multivariate logistic regression")
-    multi_result = multivariate(x, y)
+    selected_features, multi_result = multivariate(x, y)
+    print("Selected features:", selected_features)
     print("Accuracy", multi_result['accuracy'])
     print("Precision", multi_result['precision'])
     print("Recall", multi_result['recall'])
