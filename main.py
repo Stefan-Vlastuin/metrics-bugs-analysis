@@ -25,6 +25,11 @@ def main():
     x = x.loc[:, x.apply(enough_values)]  # Filter out features with few values
     y = data['hasBug']  # Target variable
 
+    total = y.size
+    bugs = y.sum()
+    print(bugs, " of ", total, " files have bugs")
+    print()
+
     show_descriptive_stats(x)
     show_correlation(x)
 
