@@ -1,5 +1,6 @@
 import pandas as pd
-from sklearn.feature_selection import SelectKBest, f_regression
+from sklearn.feature_selection import SelectKBest, f_regression, SequentialFeatureSelector
+from sklearn.linear_model import LogisticRegression
 
 from logistic_regression.log_reg import apply_logistic_regression
 
@@ -7,17 +8,21 @@ from logistic_regression.log_reg import apply_logistic_regression
 def multivariate(x, y):
     # In the current implementation, impurity is the same as using a field variable
     # Therefore, we delete the impurity metrics, to prevent problems with multicollinearity
-    # TODO: remove when the implementations of these metrics have been improved
+
+    # Remove redundant features here
     if 'MethodImpure' in x.columns:
         del x['MethodImpure']
     if 'MethodRatioImpure' in x.columns:
         del x['MethodRatioImpure']
+    if 'LambdaFieldVariable' in x.columns:
+        del x['LambdaFieldVariable']
+    if 'LambdaSideEffect' in x.columns:
+        del x['LambdaSideEffect']
 
-    selector = SelectKBest(f_regression, k=7)   # Number of baseline metrics; can substitute them for new metrics
-    x_new = selector.fit_transform(x, y)
-
-    selected_features_indices = selector.get_support(indices=True)
-    selected_features = x.columns[selected_features_indices]
+    model = LogisticRegression(class_weight="balanced", max_iter=5000)
+    sfs = SequentialFeatureSelector(model, direction="forward", n_features_to_select="auto", tol=1e-4)
+    x_new = sfs.fit_transform(x, y)
+    selected_features = x.columns[sfs.get_support()]
 
     x_new = pd.DataFrame(x_new, columns=selected_features)
 
