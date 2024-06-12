@@ -39,6 +39,10 @@ def main():
     percentage = bugs / total * 100
     print(bugs, " of ", total, " files (", percentage, "%) have bugs")
     print()
+    using_fp = data[data['UsesFP'] == 1].shape[0]
+    percentage = using_fp / total * 100
+    print(using_fp, " of ", total, " files (", percentage, "%) use FP")
+    print()
 
     show_descriptive_stats(x)
     show_correlation(x)
