@@ -27,7 +27,10 @@ def main():
 
     data = get_dataframe(metrics_path, bugs_path)
 
-    x = data.iloc[:, 1:-1]  # Features (leave out file names and target variable)
+    # # Only use files using FP
+    # data = data[data['UsesFP'] == 1]
+
+    x = data.iloc[:, 1:-2]  # Features (leave out file names, target variable (hasBug) and usesFP)
     x = x.loc[:, x.apply(enough_values)]  # Filter out features with few values
     y = data['hasBug']  # Target variable
 

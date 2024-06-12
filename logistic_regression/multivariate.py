@@ -18,10 +18,17 @@ def multivariate(x, y):
     #     del x['LambdaFieldVariable']
     # if 'LambdaSideEffect' in x.columns:
     #     del x['LambdaSideEffect']
+    # if 'LambdaComplexity' in x.columns:
+    #     del x['LambdaComplexity']
+    # if 'Complexity' in x.columns:
+    #     del x['Complexity']
+    # if 'LambdaCount' in x.columns:
+    #     del x['LambdaCount']
+    # if 'LambdaLines' in x.columns:
+    #     del x['LambdaLines']
 
-    model = LogisticRegression(class_weight="balanced", max_iter=5000)
-    # We can add a tolerance level below (e.g. tol=1e-4), but this is not necessary and seems to lead to lower F1-scores
-    sfs = SequentialFeatureSelector(model, direction="forward", n_features_to_select="auto")
+    model = LogisticRegression(class_weight="balanced", max_iter=10000)
+    sfs = SequentialFeatureSelector(model, direction="backward", n_features_to_select="auto", tol=-1e-4, n_jobs=-1)
     x_new = sfs.fit_transform(x, y)
     selected_features = x.columns[sfs.get_support()]
 
