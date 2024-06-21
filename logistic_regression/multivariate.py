@@ -26,6 +26,8 @@ def multivariate(x, y):
     #     del x['LambdaCount']
     # if 'LambdaLines' in x.columns:
     #     del x['LambdaLines']
+    # if 'MaxStreamOperations' in x.columns:
+    #     del x['MaxStreamOperations']
 
     model = LogisticRegression(class_weight="balanced", max_iter=10000)
     sfs = SequentialFeatureSelector(model, direction="backward", n_features_to_select="auto", tol=-1e-4, n_jobs=-1)

@@ -17,6 +17,12 @@ def enough_values(v):
     return v.where(lambda x: x > 0).count() >= 10
 
 
+def show_count(data, metric):
+    sum_metric = data[metric].sum()
+    count_metric = (data[metric] != 0).sum()
+    print(metric + ":", sum_metric, "distributed over", count_metric, "files")
+
+
 def main():
     if len(sys.argv) != 3:
         print("Usage: python main.py <metrics_path> <bugs_path>")
@@ -26,6 +32,13 @@ def main():
     bugs_path = sys.argv[2]
 
     data = get_dataframe(metrics_path, bugs_path)
+
+    # Count MP constructs
+    show_count(data, "LambdaSideEffect")
+    show_count(data, "HigherOrderSideEffect")
+    show_count(data, "LambdaFieldVariable")
+    show_count(data, "HigherOrderFieldVariable")
+    show_count(data, "StreamsCount")
 
     # # Only use files using FP
     # data = data[data['UsesFP'] == 1]
