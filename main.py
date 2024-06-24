@@ -39,11 +39,12 @@ def main():
     show_count(data, "LambdaFieldVariable")
     show_count(data, "HigherOrderFieldVariable")
     show_count(data, "StreamsCount")
+    show_count(data, "ComplexLambda")
 
     # # Only use files using FP
     # data = data[data['UsesFP'] == 1]
 
-    x = data.iloc[:, 1:-2]  # Features (leave out file names, target variable (hasBug) and usesFP)
+    x = data.iloc[:, 1:-3]  # Features (leave out file name, target variable (hasBug), ComplexLambda and UsesFP)
     x = x.loc[:, x.apply(enough_values)]  # Filter out features with few values
     y = data['hasBug']  # Target variable
 
